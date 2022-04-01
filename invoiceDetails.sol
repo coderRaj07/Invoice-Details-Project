@@ -57,8 +57,8 @@ function getInvoiceDetails(string memory _buyerPan) public view returns(invoiceD
 }
 
 //Get seller details from buyerPan
-function getSellerDetails() public view returns(string memory){
-    return details._sellerPan;
+function getSellerDetails() public view returns(sellerDetails memory){
+    return details;
 }
 
 }
