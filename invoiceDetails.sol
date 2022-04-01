@@ -14,7 +14,6 @@ contract invoice{
      string buyerPan;
      uint invoiceAmount;
      uint invoiceDate;
-     uint id;
     }
     
     //To know invoiceDetails from buyerPan
