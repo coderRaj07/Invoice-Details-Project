@@ -27,7 +27,7 @@ constructor(){
      address _sellerAddress ;
     }
     
-    //To strore seller details
+    //To store seller details
     sellerDetails details;
     
     function setSellerDetails(string memory _sellerPan)public onlyOwner{
