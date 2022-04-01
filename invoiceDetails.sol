@@ -26,7 +26,8 @@ constructor(){
      string _sellerPan ;
      address _sellerAddress ;
     }
-
+    
+    //To strore seller details
     sellerDetails details;
     
     function setSellerDetails(string memory _sellerPan)public onlyOwner{
@@ -56,7 +57,7 @@ function getInvoiceDetails(string memory _buyerPan) public view returns(invoiceD
     return buyerDetails[_buyerPan];
 }
 
-//Get seller details from buyerPan
+//Get seller details 
 function getSellerDetails() public view returns(sellerDetails memory){
     return details;
 }
