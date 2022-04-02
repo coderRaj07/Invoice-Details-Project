@@ -3,7 +3,6 @@
 //Objective:
 //Store buyerPan,sellerPan,invoiceAmount,invoiceDate
 //Provide list of each invoices with buyerPan
-//Provide uniqueIds to 
 
 pragma solidity >=0.7.0 <0.9.0;
 
