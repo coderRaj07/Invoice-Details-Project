@@ -221,10 +221,14 @@
     });
 
     function setInvoiceInfoWrite() {
-        myContract_write.setInvoiceDetails(_buyerPan.value,_invoiceAmount.value,_invoiceDate.value).then(function (result) {result_span.innerHTML = `Invoice Details Stored`;});
+        myContract_write.setInvoiceDetails(_buyerPan.value,_invoiceAmount.value,_invoiceDate.value)
+		.then(function (result) {result_span.innerHTML = `Invoice Details Stored`;})
+		.catch(alert('You are not the seller'));
     }
     function setSellerInfoWrite() {
-        myContract_write.setSellerDetails(sellerPan.value).then(function (result) {result_span.innerHTML = `Seller Details Stored`;});
+        myContract_write.setSellerDetails(sellerPan.value)
+		.then(function (result) {result_span.innerHTML = `Seller Details Stored`;})
+		.catch(alert('You are not the seller'));
     }
     function getInvoiceInfoRead() {
         myContract_read.getInvoiceDetails(buyerPan.value).then(function (result) {result_span.innerHTML = `Buyer Pan: ${result[0]}
@@ -232,7 +236,8 @@
 		<br>
 		Invoice Amount: ${result[1]} Rs
 		<br>
-		<br>Inoice Date:${result[2]}`;});
+		<br>Inoice Date:${result[2]}`;})
+		.catch(alert('Provide Correct Buyer Pan'));
     }
     function getSellerInfoRead() {
         myContract_read.getSellerDetails().then(function (result) {result_span.innerHTML = `Seller Pan : ${result[0]}
