@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethers</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+        crossorigin="anonymous"></script>
+
+    <!-- Ethers Library CDN    -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand">Ethers Js</a>
+        <form class="form-inline">
+            <span id="address">Address</span>
+        </form>
+    </nav>
+
+    <div class="container" style="padding-top: 200px;">
+        <div class="row">
+
+            <div class="col-md-6 text-center">
+                <div
+                    style="margin: 0px auto;width: 60%;height: 150px;background-color: rgba(194, 194, 194, 0.253);padding-top: 15%;border-radius: 10px;box-shadow: 0px 0px 5px gray;">
+                    <button class="btn btn-success" onclick="getSellerInfoRead()"> Get Seller Info </button>
+                </div>
+            </div>
+
+
+            <div class="col-md-6 text-center">
+                <div
+                    style="margin: 0px auto;width: 60%;height:300px;background-color: rgba(194, 194, 194, 0.253);padding-top: 5%;border-radius: 10px;box-shadow: 0px 0px 5px gray;padding-inline: 20px;">
+                    <input class="form-control" id="_buyerPan" placeholder="Enter buyer's pan"><br>
+                    <input class="form-control" id="_invoiceAmount" placeholder="Enter Invoice Amount"><br>
+                    <input class="form-control" id="_invoiceDate" placeholder="Enter Invoicing Date"><br>
+                    <button class="btn btn-danger" onclick="setInvoiceInfoWrite()"> Set Invoice Details </button>
+                </div>
+            </div>
+
+
+            <div class="col-md-6 text-center">
+                <div
+                    style="margin: 0px auto;width: 60%;height: 150px;background-color: rgba(194, 194, 194, 0.253);padding-top: 5%;border-radius: 10px;box-shadow: 0px 0px 5px gray;padding-inline: 20px;">
+                    <input class="form-control" id="sellerPan" placeholder="Enter your Pan (Only for Seller)"><br>
+                    <button class="btn btn-danger" onclick="setSellerInfoWrite()"> Set Seller Details </button>
+                </div>
+            </div>
+
+
+            <div class="col-md-6 text-center">
+                <div
+                    style="margin: 0px auto;width: 60%;height: 150px;background-color: rgba(194, 194, 194, 0.253);padding-top: 5%;border-radius: 10px;box-shadow: 0px 0px 5px gray;padding-inline: 20px;">
+                    <input class="form-control" id="buyerPan" placeholder="Enter Your Pan Number"><br>
+                    <button class="btn btn-danger" onclick="getInvoiceInfoRead()"> Get Invoice Details </button>
+                </div>
+            </div>
+
+
+            <div class="col-md-12 text-center " style="padding-top: 80px;">
+                <div>
+                    <span id="result"
+                        style="background-color: rgba(194, 194, 194, 0.153);padding:10px;border-radius:15px"> ----
+                        Output Here ----
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var address = "0x09a13662Be1609beF0DE163DfcE998Be5Ab33192";
+    var abi =[
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_buyerPan",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_invoiceAmount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_invoiceDate",
+				"type": "uint256"
+			}
+		],
+		"name": "setInvoiceDetails",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_sellerPan",
+				"type": "string"
+			}
+		],
+		"name": "setSellerDetails",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_buyerPan",
+				"type": "string"
+			}
+		],
+		"name": "getInvoiceDetails",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "buyerPan",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "invoiceAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "invoiceDate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct invoice.invoiceDetails",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getSellerDetails",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "_sellerPan",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "_sellerAddress",
+						"type": "address"
+					}
+				],
+				"internalType": "struct invoice.sellerDetails",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+
+    var provider, signer;
+    var buyerPan = document.getElementById('buyerPan');
+    var sellerPan = document.getElementById('sellerPan');
+    var result_span = document.getElementById('result');
+
+    async function CheckMetamaskConnection() {
+        if (window.ethereum) {
+            try {
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
+                await window.ethereum.enable();
+                ethereum.request({
+                    method: 'eth_accounts'
+                }).then((res) => {
+                    document.getElementById('address').innerHTML = res[0];
+                });
+                return true;
+            } catch (error) { return false;}
+        } else {  return false; }
+    }
+
+    $(document).ready(async function () {
+        var isMetamask = await CheckMetamaskConnection();
+        if (isMetamask) {
+            myContract_write = new ethers.Contract(address, abi, signer);
+            myContract_read = new ethers.Contract(address, abi, provider);
+        }
+    });
+
+    function setInvoiceInfoWrite() {
+        myContract_write.setInvoiceDetails(_buyerPan.value,_invoiceAmount.value,_invoiceDate.value).then(function (result) {result_span.innerHTML = `Invoice Details Stored`;});
+    }
+    function setSellerInfoWrite() {
+        myContract_write.setSellerDetails(sellerPan.value).then(function (result) {result_span.innerHTML = `Seller Details Stored`;});
+    }
+    function getInvoiceInfoRead() {
+        myContract_read.getInvoiceDetails(buyerPan.value).then(function (result) {result_span.innerHTML = `Buyer Pan: ${result[0]}
+		<br>
+		<br>
+		Invoice Amount: ${result[1]} Rs
+		<br>
+		<br>Inoice Date:${result[2]}`;});
+    }
+    function getSellerInfoRead() {
+        myContract_read.getSellerDetails().then(function (result) {result_span.innerHTML = `Seller Pan : ${result[0]}
+		 <br>
+		 <br>
+		 Seller Address: ${result[1]}`;});
+    }
+
+
+</script>
+
+</html>
